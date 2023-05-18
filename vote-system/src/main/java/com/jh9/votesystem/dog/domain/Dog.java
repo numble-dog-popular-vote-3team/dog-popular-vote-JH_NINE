@@ -56,6 +56,10 @@ public class Dog extends BaseEntity {
         thumbs--;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
