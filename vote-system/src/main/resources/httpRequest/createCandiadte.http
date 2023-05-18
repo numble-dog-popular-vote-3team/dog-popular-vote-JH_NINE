@@ -1,0 +1,28 @@
+POST {{voting-api}}/dogs
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="name"
+
+테스트1
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="photoUrl"
+
+테스트1.jpg
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="simpleDescription"
+
+간단 설명입니다.
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="detailDescription"
+
+상세 설명입니다.
+--WebAppBoundary--
+
+###

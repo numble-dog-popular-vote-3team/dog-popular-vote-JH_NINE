@@ -1,0 +1,2 @@
+GET {{voting-api}}/{id}}
+
