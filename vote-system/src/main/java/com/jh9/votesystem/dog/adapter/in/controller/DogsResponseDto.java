@@ -1,15 +1,15 @@
-package com.jh9.votesystem.dog.controller;
+package com.jh9.votesystem.dog.adapter.in.controller;
 
 import com.jh9.votesystem.dog.domain.Dog;
 import java.time.LocalDateTime;
 
-public record DogsResponseDto(
+record DogsResponseDto(
     Long id,
     String name,
     String photoUrl,
     String simpleDescription,
     int thumbs,
-    LocalDateTime createdAt
+    LocalDateTime createDate
 ) {
 
     public static DogsResponseDto toDto(Dog dog) {

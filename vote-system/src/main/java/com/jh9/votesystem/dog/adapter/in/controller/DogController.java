@@ -1,6 +1,7 @@
-package com.jh9.votesystem.dog.controller;
+package com.jh9.votesystem.dog.adapter.in.controller;
 
-import com.jh9.votesystem.dog.application.DogService;
+import com.jh9.votesystem.dog.application.port.in.DogUseCase;
+import com.jh9.votesystem.dog.application.port.in.VotingUseCase;
 import com.jh9.votesystem.dog.domain.Dog;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
@@ -16,15 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class DogController {
 
-    private final DogService dogService;
+    private final DogUseCase dogUseCase;
+    private final VotingUseCase votingUseCase;
 
-    DogController(DogService dogService) {
-        this.dogService = dogService;
+    DogController(DogUseCase dogUseCase, VotingUseCase votingUseCase) {
+        this.dogUseCase = dogUseCase;
+        this.votingUseCase = votingUseCase;
     }
 
     @GetMapping("/dogs")
     public ResponseEntity<List<DogsResponseDto>> showCandidates(@PageableDefault(size = 8, sort = "createdDate") Pageable pageable) {
-        List<Dog> dogs = dogService.showCandidates(pageable);
+        List<Dog> dogs = dogUseCase.showCandidates(pageable);
         
         List<DogsResponseDto> responseBody = dogs.stream()
             .map(DogsResponseDto::toDto)
@@ -36,7 +39,7 @@ class DogController {
 
     @GetMapping("/dogs/{id}")
     public ResponseEntity<DogDetailResponseDto> showCandidate(@PathVariable Long id) {
-        Dog dog = dogService.showCandidate(id);
+        Dog dog = dogUseCase.showCandidate(id);
 
         DogDetailResponseDto responseBody = DogDetailResponseDto.toDto(dog);
 
@@ -46,7 +49,7 @@ class DogController {
 
     @PostMapping("/dogs")
     public ResponseEntity<Void> createCandidate(DogCreateRequestDto requestDto) {
-        dogService.createCandidate(requestDto.toEntity());
+        dogUseCase.createCandidate(requestDto.toEntity());
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(null);
@@ -56,7 +59,7 @@ class DogController {
     public ResponseEntity<DogDetailResponseDto> thumbsUp(
         @RequestHeader("X-Forwarded-For") String ipAddress,
         @PathVariable Long id) {
-        Dog updatedDog = dogService.thumbsUp(id);
+        Dog updatedDog = votingUseCase.thumbsUp(id);
 
         DogDetailResponseDto responseBody = DogDetailResponseDto.toDto(updatedDog);
 
@@ -67,7 +70,7 @@ class DogController {
     public ResponseEntity<DogDetailResponseDto> thumbsDown(
         @RequestHeader("X-Forwarded-For") String ipAddress,
         @PathVariable Long id) {
-        Dog updatedDog = dogService.thumbsDown(id);
+        Dog updatedDog = votingUseCase.thumbsDown(id);
 
         DogDetailResponseDto responseBody = DogDetailResponseDto.toDto(updatedDog);
 

@@ -1,4 +1,4 @@
-package com.jh9.votesystem.utils;
+package com.jh9.votesystem.dog.adapter.out.persistence.jpa;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

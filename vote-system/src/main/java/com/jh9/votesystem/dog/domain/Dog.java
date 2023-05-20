@@ -1,31 +1,21 @@
 package com.jh9.votesystem.dog.domain;
 
-import com.jh9.votesystem.utils.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 // 레코드 PK, 이름, 사진, 간단한 설명, 상세 설명과 현재 득표수 정보를 포함해야 한다.
-@Entity
-public class Dog extends BaseEntity {
+public class Dog {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String photoUrl;
     private String simpleDescription;
     private String detailDescription;
     private int thumbs;
-
-    protected Dog() {
-    }
+    private LocalDateTime createdDate;
 
     private Dog(Long id, String name, String photoUrl, String simpleDescription,
-        String detailDescription, int thumbs) {
+        String detailDescription, int thumbs, LocalDateTime createdDate) {
         if (isBlank(name, photoUrl, simpleDescription, detailDescription)) {
             throw new IllegalArgumentException("Data Must Not Blank");
         }
@@ -35,6 +25,7 @@ public class Dog extends BaseEntity {
         this.simpleDescription = simpleDescription;
         this.detailDescription = detailDescription;
         this.thumbs = thumbs;
+        this.createdDate = createdDate;
     }
 
     private static boolean isBlank(String name, String photoUrl, String simpleDescription,
@@ -43,9 +34,14 @@ public class Dog extends BaseEntity {
             || detailDescription.isBlank();
     }
 
-    public static Dog createNewCandidate(String name, String photoUrl, String simpleDescription,
+    public static Dog createNew(String name, String photoUrl, String simpleDescription,
         String detailDescription) {
-        return new Dog(null, name, photoUrl, simpleDescription, detailDescription, 0);
+        return new Dog(null, name, photoUrl, simpleDescription, detailDescription, 0, null);
+    }
+
+    public static Dog create(Long id, String name, String photoUrl, String simpleDescription,
+        String detailDescription, int thumbs, LocalDateTime createdDate) {
+        return new Dog(id, name, photoUrl, simpleDescription, detailDescription, thumbs, createdDate);
     }
 
     public void thumbsUp() {
@@ -78,6 +74,10 @@ public class Dog extends BaseEntity {
 
     public int getThumbs() {
         return thumbs;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
     @Override

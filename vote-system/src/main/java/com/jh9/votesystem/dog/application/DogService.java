@@ -1,54 +1,44 @@
 package com.jh9.votesystem.dog.application;
 
+import com.jh9.votesystem.dog.application.port.in.DogUseCase;
+import com.jh9.votesystem.dog.application.port.out.persistence.DogCommandPort;
+import com.jh9.votesystem.dog.application.port.out.persistence.DogQueryPort;
 import com.jh9.votesystem.dog.domain.Dog;
-import com.jh9.votesystem.dog.infrastructure.persistence.DogRepository;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class DogService {
+public class DogService implements DogUseCase {
 
-    private final DogRepository dogRepository;
+    private final DogCommandPort dogCommandPort;
+    private final DogQueryPort dogQueryPort;
 
-    public DogService(DogRepository dogRepository) {
-        this.dogRepository = dogRepository;
+    public DogService(DogCommandPort dogCommandPort, DogQueryPort dogQueryPort) {
+        this.dogCommandPort = dogCommandPort;
+        this.dogQueryPort = dogQueryPort;
     }
 
+    @Override
     @Transactional
     public void createCandidate(Dog dog) {
-        dogRepository.save(dog);
+        dogCommandPort.save(dog);
     }
+
+    @Override
 
     @Transactional(readOnly = true)
     public List<Dog> showCandidates(Pageable pageable) {
-        return dogRepository.findAll(pageable).getContent();
+        return dogQueryPort.findAll(pageable);
     }
+
+    @Override
 
     @Transactional(readOnly = true)
     @Cacheable("dog")
     public Dog showCandidate(Long id) {
-        return getOrThrow(dogRepository.findById(id));
-    }
-
-    @Transactional
-    public Dog thumbsUp(Long votingId) {
-        Dog dog = getOrThrow(dogRepository.findById(votingId));
-        dog.thumbsUp();
-        return dog;
-    }
-
-    @Transactional
-    public Dog thumbsDown(Long votingId) {
-        Dog dog = getOrThrow(dogRepository.findById(votingId));
-        dog.thumbsDown();
-        return dog;
-    }
-
-    private <T> T getOrThrow(Optional<T> t) {
-        return t.orElseThrow(() -> new IllegalArgumentException("NOT_FOUND DOG"));
+        return dogQueryPort.findById(id);
     }
 }

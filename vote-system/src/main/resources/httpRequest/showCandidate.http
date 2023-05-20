@@ -1,2 +1,1 @@
-GET {{voting-api}}/{id}}
-
+GET {{voting-api}}/dogs/1
