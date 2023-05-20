@@ -4,6 +4,9 @@ import com.jh9.votesystem.dog.application.port.in.DogUseCase;
 import com.jh9.votesystem.dog.application.port.in.VotingUseCase;
 import com.jh9.votesystem.dog.domain.Dog;
 import java.util.List;
+import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class DogController {
 
+    private static final Logger log = LoggerFactory.getLogger(DogController.class);
     private final DogUseCase dogUseCase;
     private final VotingUseCase votingUseCase;
 
@@ -48,7 +52,7 @@ class DogController {
     }
 
     @PostMapping("/dogs")
-    public ResponseEntity<Void> createCandidate(DogCreateRequestDto requestDto) {
+    public ResponseEntity<Void> createCandidate(@Valid DogCreateRequestDto requestDto) {
         dogUseCase.createCandidate(requestDto.toEntity());
 
         return ResponseEntity.status(HttpStatus.CREATED)
