@@ -6,7 +6,6 @@ import com.jh9.votesystem.dog.domain.Dog;
 import com.jh9.votesystem.utils.Adapter;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.domain.Pageable;
 
 @Adapter
 class DogJpaAdapter implements DogQueryPort, DogCommandPort {
@@ -43,8 +42,8 @@ class DogJpaAdapter implements DogQueryPort, DogCommandPort {
     }
 
     @Override
-    public List<Dog> findAll(Pageable pageable) {
-        return dogRepository.findAll(pageable).stream()
+    public List<Dog> findAll(Long lastId, int pageSize) {
+        return dogRepository.search(lastId, pageSize).stream()
             .map(DogJpaEntity::toDomain)
             .toList();
     }

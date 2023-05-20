@@ -7,14 +7,13 @@ import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -30,8 +29,10 @@ class DogController {
     }
 
     @GetMapping("/dogs")
-    public ResponseEntity<List<DogsResponseDto>> showCandidates(@PageableDefault(size = 8, sort = "createdDate") Pageable pageable) {
-        List<Dog> dogs = dogUseCase.showCandidates(pageable);
+    public ResponseEntity<List<DogsResponseDto>> showCandidates(
+        Long lastId,
+        @RequestParam(defaultValue = "8") int pageSize) {
+        List<Dog> dogs = dogUseCase.showCandidates(lastId, pageSize);
         
         List<DogsResponseDto> responseBody = dogs.stream()
             .map(DogsResponseDto::toDto)

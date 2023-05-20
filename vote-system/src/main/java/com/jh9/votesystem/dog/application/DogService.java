@@ -6,7 +6,6 @@ import com.jh9.votesystem.dog.application.port.out.persistence.DogQueryPort;
 import com.jh9.votesystem.dog.domain.Dog;
 import java.util.List;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,10 +27,9 @@ public class DogService implements DogUseCase {
     }
 
     @Override
-
     @Transactional(readOnly = true)
-    public List<Dog> showCandidates(Pageable pageable) {
-        return dogQueryPort.findAll(pageable);
+    public List<Dog> showCandidates(Long lastId, int pageSize) {
+        return dogQueryPort.findAll(lastId, pageSize);
     }
 
     @Override
