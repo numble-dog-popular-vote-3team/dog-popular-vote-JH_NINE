@@ -24,11 +24,12 @@ public class DogService {
     }
 
     @Transactional(readOnly = true)
-    @Cacheable("dogs")
     public List<Dog> showCandidates(Pageable pageable) {
         return dogRepository.findAll(pageable).getContent();
     }
 
+    @Transactional(readOnly = true)
+    @Cacheable("dog")
     public Dog showCandidate(Long id) {
         return getOrThrow(dogRepository.findById(id));
     }
