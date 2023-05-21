@@ -30,6 +30,7 @@ class DogController {
 
     @GetMapping("/dogs")
     public ResponseEntity<List<DogsResponseDto>> showCandidates(
+//        @RequestHeader("X-Forwarded-For") String ipAddress,
         Long lastId,
         @RequestParam(defaultValue = "8") int pageSize) {
         List<Dog> dogs = dogUseCase.showCandidates(lastId, pageSize);
@@ -43,7 +44,9 @@ class DogController {
     }
 
     @GetMapping("/dogs/{id}")
-    public ResponseEntity<DogDetailResponseDto> showCandidate(@PathVariable Long id) {
+    public ResponseEntity<DogDetailResponseDto> showCandidate(
+//        @RequestHeader("X-Forwarded-For") String ipAddress,
+        @PathVariable Long id) {
         Dog dog = dogUseCase.showCandidate(id);
 
         DogDetailResponseDto responseBody = DogDetailResponseDto.toDto(dog);
@@ -53,7 +56,9 @@ class DogController {
     }
 
     @PostMapping("/dogs")
-    public ResponseEntity<Void> createCandidate(@Valid DogCreateRequestDto requestDto) {
+    public ResponseEntity<Void> createCandidate(
+        @RequestHeader("X-Forwarded-For") String ipAddress,
+        @Valid DogCreateRequestDto requestDto) {
         dogUseCase.createCandidate(requestDto.toEntity());
 
         return ResponseEntity.status(HttpStatus.CREATED)
