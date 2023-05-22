@@ -1,5 +1,6 @@
 package com.jh9.votesystem.dog.application;
 
+import com.jh9.votesystem.dog.application.port.in.DogSearchCondition;
 import com.jh9.votesystem.dog.application.port.in.DogUseCase;
 import com.jh9.votesystem.dog.application.port.out.cache.CachePort;
 import com.jh9.votesystem.dog.application.port.out.persistence.DogCommandPort;
@@ -30,13 +31,13 @@ public class DogService implements DogUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Dog> showCandidates(Long lastId, int pageSize) {
-        return dogQueryPort.findAll(lastId, pageSize);
+    public List<Dog> findByCondition(DogSearchCondition condition) {
+        return dogQueryPort.findAll(condition);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Dog showCandidate(Long id) {
+    public Dog findById(Long id) {
         try {
             return cachePort.get(id);
         } catch (IllegalArgumentException e) {

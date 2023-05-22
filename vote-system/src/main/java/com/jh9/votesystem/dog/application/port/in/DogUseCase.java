@@ -7,7 +7,7 @@ public interface DogUseCase {
 
     void createCandidate(Dog dog);
 
-    List<Dog> showCandidates(Long lastId, int pageSize);
+    List<Dog> findByCondition(DogSearchCondition dogSearchCondition);
 
-    Dog showCandidate(Long id);
+    Dog findById(Long id);
 }

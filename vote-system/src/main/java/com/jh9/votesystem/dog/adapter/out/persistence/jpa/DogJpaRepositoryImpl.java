@@ -2,7 +2,11 @@ package com.jh9.votesystem.dog.adapter.out.persistence.jpa;
 
 import static com.jh9.votesystem.dog.adapter.out.persistence.jpa.QDogJpaEntity.dogJpaEntity;
 
+import com.jh9.votesystem.dog.application.port.in.DogSearchCondition;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 
@@ -15,15 +19,15 @@ class DogJpaRepositoryImpl implements DogJpaRepositoryCustom {
     }
 
     @Override
-    public List<DogJpaEntity> search(Long lastId, int pageSize) {
+    public List<DogJpaEntity> search(DogSearchCondition condition) {
         return queryFactory
             .select(dogJpaEntity)
             .from(dogJpaEntity)
             .where(
-                ltDogId(lastId)
+                ltDogId(condition.getLastId())
             )
             .orderBy(dogJpaEntity.id.desc())
-            .limit(pageSize)
+            .limit(condition.getLastId())
             .fetch();
     }
 

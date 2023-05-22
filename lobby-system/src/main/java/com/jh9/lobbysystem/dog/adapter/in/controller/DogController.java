@@ -1,9 +1,9 @@
-package com.jh9.votesystem.dog.adapter.in.controller;
+package com.jh9.lobbysystem.dog.adapter.in.controller;
 
-import com.jh9.votesystem.dog.application.port.in.DogSearchCondition;
-import com.jh9.votesystem.dog.application.port.in.DogUseCase;
-import com.jh9.votesystem.dog.application.port.in.VotingUseCase;
-import com.jh9.votesystem.dog.domain.Dog;
+import com.jh9.lobbysystem.dog.application.port.in.DogSearchCondition;
+import com.jh9.lobbysystem.dog.application.port.in.DogUseCase;
+import com.jh9.lobbysystem.dog.application.port.in.VotingUseCase;
+import com.jh9.lobbysystem.dog.domain.Dog;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -35,7 +35,7 @@ class DogController {
 
         DogSearchCondition condition = new DogSearchCondition(userCookie,
             pageSize, lastId);
-        List<Dog> dogs = dogUseCase.findByCondition(condition);
+        List<Dog> dogs = dogUseCase.showCandidates(condition);
         
         List<DogsResponseDto> responseBody = dogs.stream()
             .map(DogsResponseDto::toDto)
@@ -49,7 +49,7 @@ class DogController {
     public ResponseEntity<DogDetailResponseDto> showCandidate(
 //        @RequestHeader("X-Forwarded-For") String ipAddress,
         @PathVariable Long id) {
-        Dog dog = dogUseCase.findById(id);
+        Dog dog = dogUseCase.showCandidate(id);
 
         DogDetailResponseDto responseBody = DogDetailResponseDto.toDto(dog);
 
@@ -68,24 +68,20 @@ class DogController {
     }
 
     @PostMapping("/dogs/{id}/thumbsUp")
-    public ResponseEntity<DogDetailResponseDto> thumbsUp(
-        @RequestHeader("X-Forwarded-For") String ipAddress,
+    public ResponseEntity<Void> thumbsUp(
+//        @RequestHeader("X-Forwarded-For") String ipAddress,
         @PathVariable Long id) {
-        Dog updatedDog = votingUseCase.thumbsUp(id);
+        votingUseCase.thumbsUp(id);
 
-        DogDetailResponseDto responseBody = DogDetailResponseDto.toDto(updatedDog);
-
-        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     @PostMapping("/dogs/{id}/thumbsDown")
-    public ResponseEntity<DogDetailResponseDto> thumbsDown(
-        @RequestHeader("X-Forwarded-For") String ipAddress,
+    public ResponseEntity<Void> thumbsDown(
+//        @RequestHeader("X-Forwarded-For") String ipAddress,
         @PathVariable Long id) {
-        Dog updatedDog = votingUseCase.thumbsDown(id);
+        votingUseCase.thumbsDown(id);
 
-        DogDetailResponseDto responseBody = DogDetailResponseDto.toDto(updatedDog);
-
-        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }

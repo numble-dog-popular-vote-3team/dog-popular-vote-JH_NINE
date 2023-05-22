@@ -24,6 +24,9 @@ dependencies {
     compileOnly 'org.flywaydb:flyway-core'
     compileOnly 'org.flywaydb:flyway-mysql'
 
+    // kafka
+    implementation 'org.springframework.kafka:spring-kafka:3.0.4'
+
     // for cache
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 

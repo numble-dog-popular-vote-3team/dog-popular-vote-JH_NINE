@@ -1,0 +1,9 @@
+GET http://localhost:8000/actuator/loggers/com.jh9.votesystem.dog.adapter.in.controller.DogController
+
+###
+POST http://localhost:8000/actuator/loggers/com.jh9.votesystem.dog.adapter.in.controller.DogController
+Content-Type: application/json
+
+{
+  "configuredLevel": "DEBUG"
+}

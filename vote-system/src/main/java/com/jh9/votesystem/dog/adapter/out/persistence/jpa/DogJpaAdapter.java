@@ -1,5 +1,6 @@
 package com.jh9.votesystem.dog.adapter.out.persistence.jpa;
 
+import com.jh9.votesystem.dog.application.port.in.DogSearchCondition;
 import com.jh9.votesystem.dog.application.port.out.persistence.DogCommandPort;
 import com.jh9.votesystem.dog.application.port.out.persistence.DogQueryPort;
 import com.jh9.votesystem.dog.domain.Dog;
@@ -42,8 +43,8 @@ class DogJpaAdapter implements DogQueryPort, DogCommandPort {
     }
 
     @Override
-    public List<Dog> findAll(Long lastId, int pageSize) {
-        return dogRepository.search(lastId, pageSize).stream()
+    public List<Dog> findAll(DogSearchCondition condition) {
+        return dogRepository.search(condition).stream()
             .map(DogJpaEntity::toDomain)
             .toList();
     }
