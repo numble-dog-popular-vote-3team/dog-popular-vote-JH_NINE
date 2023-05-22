@@ -1,0 +1,21 @@
+server:
+  port: 8001
+
+spring:
+  profiles:
+    active: prod
+
+  kafka:
+    producer:
+      bootstrap-servers: 127.0.0.1:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      bootstrap-servers: 127.0.0.1:9092
+      group-id: "consumerGroupId"
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+dog-server:
+  host: localhost
+  port: 8000
