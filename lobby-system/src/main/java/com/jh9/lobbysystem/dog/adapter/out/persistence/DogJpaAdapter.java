@@ -6,8 +6,8 @@ import com.jh9.lobbysystem.dog.application.port.in.DogSearchCondition;
 import com.jh9.lobbysystem.dog.application.port.out.persistence.DogQueryPort;
 import com.jh9.lobbysystem.dog.domain.Dog;
 import com.jh9.lobbysystem.utils.Adapter;
-import java.util.List;
-import java.util.Optional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Adapter
 class DogJpaAdapter implements DogQueryPort {
@@ -19,20 +19,14 @@ class DogJpaAdapter implements DogQueryPort {
     }
 
     @Override
-    public Dog findById(Long id) {
-        DogMongoEntity findEntity = getOrThrow(dogRepository.findById(id));
-        //TODO
+    public Mono<Dog> findById(Long id) {
+        return dogRepository.findById(id)
+            .map(DogMongoEntity::toDomain);
     }
 
     @Override
-    public List<Dog> findAll(DogSearchCondition condition) {
+    public Flux<Dog> findAll(DogSearchCondition condition) {
         //TODO
         return null;
-    }
-
-    private <T> T getOrThrow(Optional<T> optionalT) {
-        return optionalT.orElseThrow(
-            () -> new IllegalArgumentException("There is no data")
-        );
     }
 }

@@ -4,6 +4,8 @@ import com.jh9.lobbysystem.dog.application.port.out.cache.CachePort;
 import com.jh9.lobbysystem.dog.domain.Dog;
 import com.jh9.lobbysystem.utils.Adapter;
 import java.util.Optional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Adapter
 public class DogCacheAdapter implements CachePort {
@@ -20,9 +22,15 @@ public class DogCacheAdapter implements CachePort {
     }
 
     @Override
-    public Dog get(Long id) {
+    public Mono<Dog> get(Long id) {
         DogRedisEntity redisEntity = getOrThrow(dogRedisRepository.findById(id));
-        return redisEntity.toDomain();
+//        return redisEntity.toDomain();
+        return null;
+    }
+
+    @Override
+    public Flux<Dog> getRanking() {
+        return null;
     }
 
     private <T> T getOrThrow(Optional<T> optionalT) {

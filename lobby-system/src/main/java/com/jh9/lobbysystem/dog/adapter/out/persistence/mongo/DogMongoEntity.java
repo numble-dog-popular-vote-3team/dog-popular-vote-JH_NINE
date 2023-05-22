@@ -1,5 +1,6 @@
 package com.jh9.lobbysystem.dog.adapter.out.persistence.mongo;
 
+import com.jh9.lobbysystem.dog.domain.Dog;
 import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,7 +15,6 @@ public class DogMongoEntity {
     private String simpleDescription;
     private String detailDescription;
     private int thumbs;
-    private boolean thumbUp;
     private LocalDateTime createdDate;
 
     public Long getId() {
@@ -45,7 +45,8 @@ public class DogMongoEntity {
         return createdDate;
     }
 
-    public boolean isThumbUp() {
-        return thumbUp;
+    public Dog toDomain() {
+        return Dog.create(id, name, photoUrl, simpleDescription, detailDescription, thumbs,
+            createdDate);
     }
 }

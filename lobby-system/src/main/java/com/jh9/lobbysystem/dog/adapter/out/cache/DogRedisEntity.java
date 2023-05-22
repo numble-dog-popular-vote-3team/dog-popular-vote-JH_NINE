@@ -41,6 +41,4 @@ class DogRedisEntity implements Serializable {
         return Dog.create(id, name, photoUrl, simpleDescription, detailDescription, thumbs,
             createdDate);
     }
-
-
 }

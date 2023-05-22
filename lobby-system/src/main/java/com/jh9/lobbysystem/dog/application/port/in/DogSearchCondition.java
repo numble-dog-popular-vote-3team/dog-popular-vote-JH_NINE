@@ -3,13 +3,17 @@ package com.jh9.lobbysystem.dog.application.port.in;
 public class DogSearchCondition {
 
     private String userCookie;
-    private int pageSize;
-    private long lastId;
+    private int pageSize = 8;
+    private Long lastId;
+    private String searchKeyword;
+    private String sortKeyword;
+    private boolean isAscending = false;
 
-    public DogSearchCondition(String userCookie, int pageSize, long lastId) {
+    public DogSearchCondition() {
+    }
+
+    public void setUserCookie(String userCookie) {
         this.userCookie = userCookie;
-        this.pageSize = pageSize;
-        this.lastId = lastId;
     }
 
     public String getUserCookie() {
@@ -20,7 +24,19 @@ public class DogSearchCondition {
         return pageSize;
     }
 
-    public long getLastId() {
+    public Long getLastId() {
         return lastId;
+    }
+
+    public String getSearchKeyword() {
+        return searchKeyword;
+    }
+
+    public String getSortKeyword() {
+        return sortKeyword;
+    }
+
+    public boolean isAscending() {
+        return isAscending;
     }
 }

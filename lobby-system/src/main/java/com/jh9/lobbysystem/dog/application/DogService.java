@@ -8,6 +8,8 @@ import com.jh9.lobbysystem.dog.domain.Dog;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class DogService implements DogUseCase {
@@ -22,19 +24,20 @@ public class DogService implements DogUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Dog> showCandidates(DogSearchCondition condition) {
+    public Flux<Dog> showCandidates(DogSearchCondition condition) {
         return dogQueryPort.findAll(condition);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Dog showCandidate(Long id) {
-        try {
-            return cachePort.get(id);
-        } catch (IllegalArgumentException e) {
-            Dog queryedDog = dogQueryPort.findById(id);
-            cachePort.save(queryedDog);
-            return queryedDog;
-        }
+    public Mono<Dog> showCandidate(Long id) {
+//        try {
+//            return cachePort.get(id);
+//        } catch (IllegalArgumentException e) {
+//            Dog queryedDog = dogQueryPort.findById(id);
+//            cachePort.save(queryedDog);
+//            return queryedDog;
+//        }
+        return null;
     }
 }

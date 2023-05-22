@@ -4,7 +4,6 @@ import com.jh9.lobbysystem.dog.application.port.in.DogSearchCondition;
 import com.jh9.lobbysystem.dog.application.port.in.DogUseCase;
 import com.jh9.lobbysystem.dog.application.port.in.VotingUseCase;
 import com.jh9.lobbysystem.dog.domain.Dog;
-import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 class DogController {
@@ -28,40 +29,31 @@ class DogController {
     }
 
     @GetMapping("/dogs")
-    public ResponseEntity<List<DogsResponseDto>> showCandidates(
+    public ResponseEntity<Flux<DogsResponseDto>> showCandidates(
         @CookieValue(value = "dog-vote", required = false) String userCookie,
-        Long lastId,
-        @RequestParam(defaultValue = "8") int pageSize) {
+        DogSearchCondition condition) {
+        condition.setUserCookie(userCookie);
 
-        DogSearchCondition condition = new DogSearchCondition(userCookie,
-            pageSize, lastId);
-        List<Dog> dogs = dogUseCase.showCandidates(condition);
-        
-        List<DogsResponseDto> responseBody = dogs.stream()
-            .map(DogsResponseDto::toDto)
-            .toList();
+        dogUseCase.showCandidates(condition);
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(responseBody);
+            .body(null);
     }
 
     @GetMapping("/dogs/{id}")
-    public ResponseEntity<DogDetailResponseDto> showCandidate(
+    public ResponseEntity<Mono<DogDetailResponseDto>> showCandidate(
 //        @RequestHeader("X-Forwarded-For") String ipAddress,
         @PathVariable Long id) {
-        Dog dog = dogUseCase.showCandidate(id);
 
-        DogDetailResponseDto responseBody = DogDetailResponseDto.toDto(dog);
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(responseBody);
+            .body(null);
     }
 
     @PostMapping("/dogs")
     public ResponseEntity<Void> createCandidate(
         @RequestHeader("X-Forwarded-For") String ipAddress,
         @Valid DogCreateRequestDto requestDto) {
-        dogUseCase.createCandidate(requestDto.toEntity());
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(null);

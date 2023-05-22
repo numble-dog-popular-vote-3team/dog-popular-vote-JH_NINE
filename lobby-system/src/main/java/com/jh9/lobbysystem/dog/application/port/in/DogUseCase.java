@@ -3,10 +3,12 @@ package com.jh9.lobbysystem.dog.application.port.in;
 
 import com.jh9.lobbysystem.dog.domain.Dog;
 import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface DogUseCase {
 
-    List<Dog> showCandidates(DogSearchCondition dogSearchCondition);
+    Flux<Dog> showCandidates(DogSearchCondition dogSearchCondition);
 
-    Dog showCandidate(Long id);
+    Mono<Dog> showCandidate(Long id);
 }

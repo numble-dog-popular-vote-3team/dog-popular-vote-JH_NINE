@@ -14,16 +14,14 @@ repositories {
 
 dependencies {
 	// for cache
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 
 	// kafka
 	implementation 'org.springframework.kafka:spring-kafka:3.0.4'
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-	compileOnly group: 'org.mongodb', name: 'mongo-java-driver', version: '3.10.1'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 
-
-	implementation 'org.springframework.boot:spring-boot-starter-web-'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
