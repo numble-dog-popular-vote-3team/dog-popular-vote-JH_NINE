@@ -19,7 +19,7 @@ class VotingProducer implements SendVotingEventPort {
     @Override
     public Mono<Void> sendTo(String kafkaTopic, Long id, boolean isThumbUp) {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonStringValue = "";
+        String jsonStringValue;
         try {
             jsonStringValue = mapper.writeValueAsString(new VotingDto(id, isThumbUp));
         } catch (JsonProcessingException e) {

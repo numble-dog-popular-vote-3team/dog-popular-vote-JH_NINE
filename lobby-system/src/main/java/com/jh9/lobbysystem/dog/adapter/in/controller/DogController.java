@@ -5,7 +5,6 @@ import com.jh9.lobbysystem.dog.application.port.in.DogUseCase;
 import com.jh9.lobbysystem.dog.application.port.in.VotingUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
