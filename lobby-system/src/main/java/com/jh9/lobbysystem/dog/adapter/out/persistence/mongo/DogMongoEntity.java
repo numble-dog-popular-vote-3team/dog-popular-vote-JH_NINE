@@ -46,7 +46,7 @@ public class DogMongoEntity {
     }
 
     public Dog toDomain() {
-        return Dog.create(id, name, photoUrl, simpleDescription, detailDescription, thumbs,
+        return new Dog(id, name, photoUrl, simpleDescription, detailDescription, thumbs,
             createdDate);
     }
 }
