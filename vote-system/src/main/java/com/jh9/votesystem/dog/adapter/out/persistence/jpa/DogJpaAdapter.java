@@ -17,12 +17,6 @@ class DogJpaAdapter implements DogQueryPort, DogCommandPort {
     }
 
     @Override
-    public Dog save(Dog dog) {
-        DogJpaEntity savedEntity = dogRepository.save(DogJpaEntity.toEntity(dog));
-        return savedEntity.toDomain();
-    }
-
-    @Override
     public Dog update(Dog dog) {
         DogJpaEntity updatedEntity = dogRepository.save(DogJpaEntity.toEntity(dog));
         return updatedEntity.toDomain();
