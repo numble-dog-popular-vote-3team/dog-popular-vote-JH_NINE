@@ -11,7 +11,7 @@ class DogCacheAdapter implements CachePort {
 
     private final ReactiveRedisTemplate<Long, Dog> redisTemplate;
 
-    public DogCacheAdapter(ReactiveRedisTemplate<Long, Dog> redisTemplate) {
+    public DogCacheAdapter(ReactiveRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
