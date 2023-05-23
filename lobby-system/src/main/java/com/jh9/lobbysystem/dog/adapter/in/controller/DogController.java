@@ -60,7 +60,7 @@ class DogController {
     public Mono<ServerResponse> thumbsDown(
         @PathVariable Long id) {
 
-        return votingUseCase.thumbsUp(id)
+        return votingUseCase.thumbsDown(id)
             .then(ServerResponse.status(HttpStatus.NO_CONTENT).body(null));
     }
 }
