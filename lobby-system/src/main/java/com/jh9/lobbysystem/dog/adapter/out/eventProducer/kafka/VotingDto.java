@@ -1,4 +1,4 @@
-package com.jh9.lobbysystem.dog.adapter.out.eventProducer;
+package com.jh9.lobbysystem.dog.adapter.out.eventProducer.kafka;
 
 import java.io.Serializable;
 

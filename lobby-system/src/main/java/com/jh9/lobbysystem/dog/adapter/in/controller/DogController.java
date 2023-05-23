@@ -53,7 +53,7 @@ class DogController {
     public Mono<ServerResponse> thumbsUp(
         @PathVariable Long id) {
         return votingUseCase.thumbsUp(id)
-            .flatMap(o -> ResponseEntity.status(HttpStatus.NO_CONTENT).body(null));
+            .then(ServerResponse.status(HttpStatus.NO_CONTENT).body(null));
     }
 
     @PostMapping("/dogs/{id}/thumbsDown")
@@ -61,6 +61,6 @@ class DogController {
         @PathVariable Long id) {
 
         return votingUseCase.thumbsUp(id)
-            .flatMap(o -> ResponseEntity.status(HttpStatus.NO_CONTENT).body(null));
+            .then(ServerResponse.status(HttpStatus.NO_CONTENT).body(null));
     }
 }

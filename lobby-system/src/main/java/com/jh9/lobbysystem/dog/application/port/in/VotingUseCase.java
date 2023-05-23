@@ -1,11 +1,11 @@
 package com.jh9.lobbysystem.dog.application.port.in;
 
 
-import com.jh9.lobbysystem.dog.domain.Dog;
+import reactor.core.publisher.Mono;
 
 public interface VotingUseCase {
 
-    void thumbsUp(Long votingId);
+    Mono<Void> thumbsUp(Long votingId);
 
-    void thumbsDown(Long votingId);
+    Mono<Void> thumbsDown(Long votingId);
 }

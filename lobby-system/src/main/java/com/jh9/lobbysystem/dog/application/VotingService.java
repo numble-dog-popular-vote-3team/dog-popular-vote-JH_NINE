@@ -2,9 +2,9 @@ package com.jh9.lobbysystem.dog.application;
 
 import com.jh9.lobbysystem.dog.application.port.in.VotingUseCase;
 import com.jh9.lobbysystem.dog.application.port.out.eventProducer.SendVotingEventPort;
-import com.jh9.lobbysystem.dog.domain.Dog;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Mono;
 
 @Service
 public class VotingService implements VotingUseCase {
@@ -16,12 +16,12 @@ public class VotingService implements VotingUseCase {
     }
 
     @Transactional
-    public void thumbsUp(Long votingId) {
-        sendVotingEventPort.sendTo("dog-voting", votingId, true);
+    public Mono<Void> thumbsUp(Long votingId) {
+        return sendVotingEventPort.sendTo("dog-voting", votingId, true);
     }
 
     @Transactional
-    public void thumbsDown(Long votingId) {
-        sendVotingEventPort.sendTo("dog-voting", votingId, false);
+    public Mono<Void> thumbsDown(Long votingId) {
+        return sendVotingEventPort.sendTo("dog-voting", votingId, false);
     }
 }
