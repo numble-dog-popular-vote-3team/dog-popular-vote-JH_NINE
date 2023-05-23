@@ -5,5 +5,5 @@ import java.util.List;
 
 interface DogJpaRepositoryCustom {
 
-    List<DogJpaEntity> search(DogSearchCondition condition);
+    List<Long> search(DogSearchCondition condition);
 }

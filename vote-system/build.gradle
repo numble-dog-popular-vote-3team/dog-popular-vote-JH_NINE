@@ -19,7 +19,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive:3.0.4'
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     compileOnly 'org.flywaydb:flyway-core'
@@ -27,9 +26,6 @@ dependencies {
 
     // kafka
     implementation 'org.springframework.kafka:spring-kafka:3.0.4'
-
-    // for cache
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'

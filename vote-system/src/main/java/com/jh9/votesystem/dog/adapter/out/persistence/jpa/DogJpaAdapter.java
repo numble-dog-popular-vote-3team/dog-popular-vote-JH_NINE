@@ -6,7 +6,6 @@ import com.jh9.votesystem.dog.application.port.out.persistence.DogQueryPort;
 import com.jh9.votesystem.dog.domain.Dog;
 import com.jh9.votesystem.utils.Adapter;
 import java.util.List;
-import java.util.Optional;
 
 @Adapter
 class DogJpaAdapter implements DogQueryPort, DogCommandPort {
@@ -31,27 +30,13 @@ class DogJpaAdapter implements DogQueryPort, DogCommandPort {
 
     @Override
     public Dog findById(Long id) {
-        DogJpaEntity findEntity = getOrThrow(dogRepository.findById(id));
-        return findEntity.toDomain();
+        return dogRepository.findById(id)
+            .map(DogJpaEntity::toDomain)
+            .orElseThrow(() -> new IllegalArgumentException("There is no data"));
     }
 
     @Override
-    public List<Dog> findAll() {
-        return dogRepository.findAll().stream()
-            .map(DogJpaEntity::toDomain)
-            .toList();
-    }
-
-    @Override
-    public List<Dog> findAll(DogSearchCondition condition) {
-        return dogRepository.search(condition).stream()
-            .map(DogJpaEntity::toDomain)
-            .toList();
-    }
-
-    private <T> T getOrThrow(Optional<T> optionalT) {
-        return optionalT.orElseThrow(
-            () -> new IllegalArgumentException("There is no data")
-        );
+    public List<Long> findByCondition(DogSearchCondition condition) {
+        return dogRepository.search(condition);
     }
 }

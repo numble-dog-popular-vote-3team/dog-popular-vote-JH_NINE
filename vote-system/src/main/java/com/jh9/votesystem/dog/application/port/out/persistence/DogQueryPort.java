@@ -8,7 +8,5 @@ public interface DogQueryPort {
 
     Dog findById(Long id);
 
-    List<Dog> findAll();
-
-    List<Dog> findAll(DogSearchCondition condition);
+    List<Long> findByCondition(DogSearchCondition condition);
 }
