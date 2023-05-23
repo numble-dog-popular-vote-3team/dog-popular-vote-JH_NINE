@@ -6,9 +6,7 @@ import reactor.core.publisher.Mono;
 
 public interface CachePort {
 
-    void save(Dog dog);
+    Mono<Boolean> save(Dog dog);
 
     Mono<Dog> get(Long id);
-
-    Flux<Dog> getRanking();
 }
