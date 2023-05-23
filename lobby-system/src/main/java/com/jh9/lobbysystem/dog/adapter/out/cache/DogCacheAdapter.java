@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import reactor.core.publisher.Mono;
 
 @Adapter
-public class DogCacheAdapter implements CachePort {
+class DogCacheAdapter implements CachePort {
 
     private final ReactiveRedisTemplate<Long, Dog> redisTemplate;
 

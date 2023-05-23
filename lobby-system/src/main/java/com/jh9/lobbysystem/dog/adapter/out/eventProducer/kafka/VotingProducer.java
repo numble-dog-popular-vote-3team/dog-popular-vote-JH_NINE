@@ -8,7 +8,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import reactor.core.publisher.Mono;
 
 @Adapter
-public class VotingProducer implements SendVotingEventPort {
+class VotingProducer implements SendVotingEventPort {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
