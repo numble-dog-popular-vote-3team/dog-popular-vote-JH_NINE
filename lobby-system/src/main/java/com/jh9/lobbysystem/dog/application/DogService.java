@@ -5,7 +5,6 @@ import com.jh9.lobbysystem.dog.application.port.in.DogUseCase;
 import com.jh9.lobbysystem.dog.application.port.out.cache.CachePort;
 import com.jh9.lobbysystem.dog.application.port.out.persistence.DogQueryPort;
 import com.jh9.lobbysystem.dog.domain.Dog;
-import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
@@ -24,20 +23,23 @@ public class DogService implements DogUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public Flux<Dog> showCandidates(DogSearchCondition condition) {
+    public Flux<Dog> searchDogs(DogSearchCondition condition) {
         return dogQueryPort.findAll(condition);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Mono<Dog> showCandidate(Long id) {
-//        try {
-//            return cachePort.get(id);
-//        } catch (IllegalArgumentException e) {
-//            Dog queryedDog = dogQueryPort.findById(id);
-//            cachePort.save(queryedDog);
-//            return queryedDog;
-//        }
-        return null;
+    public Mono<Dog> searchDog(Long id) {
+        return cachePort.get(id)
+            .switchIfEmpty(getDataFromPersistence(id))
+            .doOnNext(this::cacheData);
+    }
+
+    private Mono<Dog> getDataFromPersistence(Long id) {
+        return dogQueryPort.findById(id);
+    }
+
+    private void cacheData(Dog dog) {
+        cachePort.save(dog);
     }
 }
