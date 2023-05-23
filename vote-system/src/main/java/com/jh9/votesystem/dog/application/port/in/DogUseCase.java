@@ -5,9 +5,7 @@ import java.util.List;
 
 public interface DogUseCase {
 
-    void createCandidate(Dog dog);
-
-    List<Dog> findByCondition(DogSearchCondition dogSearchCondition);
+    List<Long> findByCondition(DogSearchCondition dogSearchCondition);
 
     Dog findById(Long id);
 }
