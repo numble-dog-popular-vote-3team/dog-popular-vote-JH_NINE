@@ -1,16 +1,28 @@
 package com.jh9.lobbysystem.dog.application.port.in;
 
-public class DogSearchCondition {
+import java.util.List;
 
-    private String userCookie;
-    private int pageSize;
-    private long lastId;
+public record DogSearchCondition(
+    String userCookie,
+    Integer pageSize,
+    Object lastValue,
+    String name,
+    Integer thumbs,
+    Boolean onlyVote,   // 내가 투표한 목록만 보기
+    String sortKey,
+    Boolean doAscending
+) {
 
-    private String name;
-    private int thumbs;
-    private boolean onlyVote;
-
-    // 정렬 기준
-    private String sortKey;
-    private boolean doAscending;
+    public DogSearchCondition(String userCookie, Integer pageSize,
+        Object lastValue, String name, Integer thumbs, Boolean onlyVote, String sortKey,
+        Boolean doAscending) {
+        this.userCookie = userCookie;
+        this.pageSize = (pageSize == null) ? 8 : pageSize;
+        this.lastValue = ((List) lastValue).get(0);
+        this.name = name;
+        this.thumbs = thumbs;
+        this.onlyVote = onlyVote;
+        this.sortKey = (sortKey == null) ? "id" : sortKey;
+        this.doAscending = doAscending != null && doAscending;
+    }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 @Configuration
-public class DogControllerConfig {
+public class RouteConfig {
 
     @Bean
     public RouterFunction<ServerResponse> route(DogController controller) {

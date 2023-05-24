@@ -4,7 +4,9 @@ import com.jh9.lobbysystem.dog.application.port.in.DogSearchCondition;
 import com.jh9.lobbysystem.dog.application.port.in.DogUseCase;
 import com.jh9.lobbysystem.dog.application.port.out.cache.CachePort;
 import com.jh9.lobbysystem.dog.application.port.out.persistence.DogQueryPort;
+import com.jh9.lobbysystem.dog.application.port.out.webClient.DogSearchPort;
 import com.jh9.lobbysystem.dog.domain.Dog;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
@@ -14,26 +16,27 @@ public class DogService implements DogUseCase {
 
     private final CachePort cachePort;
     private final DogQueryPort dogQueryPort;
+    private final DogSearchPort dogSearchPort;
 
-    public DogService(CachePort cachePort, DogQueryPort dogQueryPort) {
+    public DogService(CachePort cachePort, DogQueryPort dogQueryPort, DogSearchPort dogSearchPort) {
         this.cachePort = cachePort;
         this.dogQueryPort = dogQueryPort;
+        this.dogSearchPort = dogSearchPort;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Mono<Dog> searchDogs(DogSearchCondition condition) {
-        return dogQueryPort.findAll(condition);
+    public Mono<List<Dog>> searchDogs(DogSearchCondition condition) {
+        return dogSearchPort.searchByCondition(condition)
+            .flatMap(dogQueryPort::findAll);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Mono<Dog> searchDog(Long id) {
-        Mono<Dog> dogMono = cachePort.get(id)
+        return cachePort.get(id)
             .switchIfEmpty(getDataFromPersistence(id)
                 .doOnNext(this::cacheData));
-
-        return dogMono;
     }
 
     private Mono<Dog> getDataFromPersistence(Long id) {
