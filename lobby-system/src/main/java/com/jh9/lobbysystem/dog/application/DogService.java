@@ -7,7 +7,6 @@ import com.jh9.lobbysystem.dog.application.port.out.persistence.DogQueryPort;
 import com.jh9.lobbysystem.dog.domain.Dog;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -23,16 +22,18 @@ public class DogService implements DogUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public Flux<Dog> searchDogs(DogSearchCondition condition) {
+    public Mono<Dog> searchDogs(DogSearchCondition condition) {
         return dogQueryPort.findAll(condition);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Mono<Dog> searchDog(Long id) {
-        return cachePort.get(id)
-            .switchIfEmpty(getDataFromPersistence(id))
-            .doOnNext(this::cacheData);
+        Mono<Dog> dogMono = cachePort.get(id)
+            .switchIfEmpty(getDataFromPersistence(id)
+                .doOnNext(this::cacheData));
+
+        return dogMono;
     }
 
     private Mono<Dog> getDataFromPersistence(Long id) {

@@ -17,6 +17,7 @@ class DogJpaAdapter implements DogCommandPort {
     @Override
     public void saveOrUpdate(Mono<Dog> dog) {
         dog.map(DogMongoEntity::toEntity)
-            .subscribe(dogRepository::save);
+            .flatMap(dogRepository::save)
+            .subscribe();
     }
 }

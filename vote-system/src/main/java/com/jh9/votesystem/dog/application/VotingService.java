@@ -27,7 +27,7 @@ public class VotingService implements VotingUseCase {
         Dog dog = dogQueryPort.findById(votingId);
         dog.thumbsUp();
         dogCommandPort.update(dog);
-        dogChangeEventPort.sendTo("dog-change-topic", votingId);
+        dogChangeEventPort.sendTo("dog-change", votingId);
         return dog;
     }
 
@@ -36,7 +36,7 @@ public class VotingService implements VotingUseCase {
         Dog dog = dogQueryPort.findById(votingId);
         dog.thumbsDown();
         dogCommandPort.update(dog);
-        dogChangeEventPort.sendTo("dog-change-topic", votingId);
+        dogChangeEventPort.sendTo("dog-change", votingId);
         return dog;
     }
 }

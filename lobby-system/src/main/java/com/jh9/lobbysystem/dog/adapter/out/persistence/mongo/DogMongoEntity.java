@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collation = "dog")
+@Document(collection = "dog_view")
 public class DogMongoEntity {
 
     @Id
@@ -17,32 +17,7 @@ public class DogMongoEntity {
     private int thumbs;
     private LocalDateTime createdDate;
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public String getSimpleDescription() {
-        return simpleDescription;
-    }
-
-    public String getDetailDescription() {
-        return detailDescription;
-    }
-
-    public int getThumbs() {
-        return thumbs;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    protected DogMongoEntity() {
     }
 
     public Dog toDomain() {

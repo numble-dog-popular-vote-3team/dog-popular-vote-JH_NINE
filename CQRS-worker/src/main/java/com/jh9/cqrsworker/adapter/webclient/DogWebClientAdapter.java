@@ -2,6 +2,7 @@ package com.jh9.cqrsworker.adapter.webclient;
 
 import com.jh9.cqrsworker.application.port.DogPollingDataPort;
 import com.jh9.cqrsworker.domain.Dog;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -17,10 +18,11 @@ class DogWebClientAdapter implements DogPollingDataPort {
     @Value("${dog-server.port}")
     private int port;
 
-    private final WebClient webClient;
+    private WebClient webClient;
 
-    public DogWebClientAdapter() {
-        this.webClient = WebClient.create("http://%s:%d".formatted(host, port));
+    @PostConstruct
+    public void setUpWebClient() {
+        this.webClient = WebClient.create("http://" + host + ":" +  port);
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collation = "dog-exposure")
+@Document(collection = "dog_view")
 public class DogMongoEntity {
 
     @Id
@@ -16,6 +16,9 @@ public class DogMongoEntity {
     private String detailDescription;
     private int thumbs;
     private LocalDateTime createdDate;
+
+    protected DogMongoEntity() {
+    }
 
     private DogMongoEntity(Long id, String name, String photoUrl, String simpleDescription,
         String detailDescription, int thumbs, LocalDateTime createdDate) {

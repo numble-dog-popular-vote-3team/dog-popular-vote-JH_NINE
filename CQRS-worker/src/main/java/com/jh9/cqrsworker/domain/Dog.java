@@ -3,7 +3,6 @@ package com.jh9.cqrsworker.domain;
 import java.time.LocalDateTime;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collation = "dog")
 public record Dog(
     Long id,
     String name,

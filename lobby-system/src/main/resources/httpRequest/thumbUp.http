@@ -1,0 +1,5 @@
+POST {{voting-api}}/dogs/2/thumbsUp
+
+###
+POST {{voting-api}}/dogs/2/thumbsDown
+Content-Type: application/json

@@ -18,16 +18,16 @@ public class DogUpdateConsumer {
         this.dogUpdateUseCase = dogUpdateUseCase;
     }
 
-    @KafkaListener(topics = "dog-change-topic")
+    @KafkaListener(topics = "dog-change")
     public void consume(String kafkaMessage) {
-        Map<Object, Object> map = new HashMap<>();
+        DogUpdateMessage message;
         ObjectMapper mapper = new ObjectMapper();
         try {
-            map = mapper.readValue(kafkaMessage, new TypeReference<Map<Object, Object>>() {});
+            message = mapper.readValue(kafkaMessage, DogUpdateMessage.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
-        dogUpdateUseCase.update((Long) map.get("id"));
+        dogUpdateUseCase.update(message.id());
     }
 }

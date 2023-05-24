@@ -9,7 +9,8 @@ import reactor.core.publisher.Mono;
 @Adapter
 class DogCacheAdapter implements CachePort {
 
-    private final ReactiveRedisTemplate<Long, Dog> redisTemplate;
+    private static final String REDIS_KEY_PREFIX = "dog:";
+    private final ReactiveRedisTemplate<String, Dog> redisTemplate;
 
     public DogCacheAdapter(ReactiveRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -18,12 +19,12 @@ class DogCacheAdapter implements CachePort {
     @Override
     public Mono<Boolean> save(Dog dog) {
         return redisTemplate.opsForValue()
-            .set(dog.id(), dog);
+            .set(REDIS_KEY_PREFIX + dog.id(), dog);
     }
 
     @Override
     public Mono<Dog> get(Long id) {
         return redisTemplate.opsForValue()
-            .get(id);
+            .get(REDIS_KEY_PREFIX + id);
     }
 }

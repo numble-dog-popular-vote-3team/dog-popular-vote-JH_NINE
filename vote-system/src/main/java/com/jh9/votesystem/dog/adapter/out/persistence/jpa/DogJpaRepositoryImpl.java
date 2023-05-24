@@ -22,29 +22,44 @@ class DogJpaRepositoryImpl implements DogJpaRepositoryCustom {
             .select(dogJpaEntity.id)
             .from(dogJpaEntity)
             .where(
-                ltDogId(condition.getLastId()),
-                eqName(condition.getName()),
-                gtThumbs(condition.getThumbs())
+                useNonOffset(condition.sortKey(), condition.lastValue()),
+                eqName(condition.name()),
+                gtThumbs(condition.thumbs())
             )
-            .orderBy(orderBy(condition.getSortKey(), condition.doAscending()))
-            .limit(condition.getLastId())
+            .orderBy(orderByKey(condition.sortKey(), condition.doAscending()))
+            .limit(condition.pageSize())
             .fetch();
     }
 
+    private BooleanExpression useNonOffset(String keyName, Object lastValue) {
+        return switch (keyName) {
+            case "name" -> ltName(lastValue);
+            case "thumbs" -> ltThumbs(lastValue);
+            default -> ltDogId(lastValue);
+        };
+    }
 
-    private BooleanExpression ltDogId(Long dogId) {
-        return dogId == null ? null : dogJpaEntity.id.lt(dogId);
+    private BooleanExpression ltDogId(Object dogId) {
+        return dogId == null ? null : dogJpaEntity.id.lt(Long.parseLong((String) dogId));
+    }
+
+    private BooleanExpression ltName(Object name) {
+        return name == null ? null : dogJpaEntity.name.lt((String) name);
+    }
+
+    private BooleanExpression ltThumbs(Object thumbs) {
+        return thumbs == null ? null : dogJpaEntity.id.lt(Integer.parseInt((String) thumbs));
     }
 
     private BooleanExpression eqName(String name) {
         return name == null || name.isBlank() ? null : dogJpaEntity.name.eq(name);
     }
 
-    private BooleanExpression gtThumbs(int thumbs) {
-        return thumbs == 0 ? null : dogJpaEntity.thumbs.gt(thumbs);
+    private BooleanExpression gtThumbs(Object thumbs) {
+        return thumbs == null ? null : dogJpaEntity.thumbs.gt(Integer.parseInt((String) thumbs));
     }
 
-    private OrderSpecifier<?> orderBy(String keyName, boolean doAscending) {
+    private OrderSpecifier<?> orderByKey(String keyName, boolean doAscending) {
         return switch (keyName) {
             case "name" -> sortByName(doAscending);
             case "thumbs" -> sortByThumbs(doAscending);

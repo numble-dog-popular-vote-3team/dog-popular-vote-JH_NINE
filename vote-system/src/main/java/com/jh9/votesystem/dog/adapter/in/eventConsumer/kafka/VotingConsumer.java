@@ -18,7 +18,7 @@ public class VotingConsumer {
         this.votingUseCase = votingUseCase;
     }
 
-    @KafkaListener(topics = "voting-topic")
+    @KafkaListener(topics = "dog-voting")
     public void processMessage(String kafkaMessage) {
         Map<Object, Object> map = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
@@ -29,9 +29,9 @@ public class VotingConsumer {
         }
 
         if ((boolean) map.get("isThumbUp")) {
-            votingUseCase.thumbsUp((Long) map.get("id"));
+            votingUseCase.thumbsUp(((Number) map.get("id")).longValue());
         } else {
-            votingUseCase.thumbsDown((Long) map.get("id"));
+            votingUseCase.thumbsDown(((Number) map.get("id")).longValue());
         }
     }
 }
