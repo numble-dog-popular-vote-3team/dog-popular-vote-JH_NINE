@@ -1,20 +1,29 @@
 server:
-  port: 8001
+  port: 8000
 
 spring:
+  application:
+    name: dog-exposure
   profiles:
     active: prod
 
-  kafka:
-    producer:
-      bootstrap-servers: 127.0.0.1:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-
-  data:
-    mongodb:
-      uri: mongodb://dog:1234@localhost:27017/dog?authSource=admin&retryWrites=true&w=majority
-
-dog-server:
-  host: localhost
-  port: 8000
+#resilience4j:
+#  circuitbreaker:
+#    configs:
+#      default:
+#        sliding-window-type: count_based  # CircuitBreaker가 닫힐 때 통화 결과를 기록하는 데 사용되는 슬라이딩 창의 유형을 구성 (Count or Time 기반)
+#        slidingWindowSize: 100            # 기록하는데 사용되는 슬라이딩 창의 크기 (Count 기반 = 횟수, Time 기반 = 시간)
+#        permittedNumberOfCallsInHalfOpenState: 10
+#        waitDurationInOpenState: 10000    # CircuitBreaker를 Open 한 상태를 유지하는 지속시간, 이 기간 이휴 half-open 상태 유지
+#        failureRateThreshold: 60
+#        eventConsumerBufferSize: 10
+#        registerHealthIndicator: true
+#      someShared:
+#        slidingWindowSize: 50
+#        permittedNumberOfCallsInHalfOpenState: 10
+#    instances:
+#      backendA:
+#        baseConfig: default
+#        waitDurationInOpenState: 5000
+#      backendB:
+#        baseConfig: someShared

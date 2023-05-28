@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     compileOnly 'org.flywaydb:flyway-core'
@@ -31,6 +32,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // tracing
+    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin:2.2.8.RELEASE'
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.7'
+
+    // swagger
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
 
     // Querydsl 추가
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'

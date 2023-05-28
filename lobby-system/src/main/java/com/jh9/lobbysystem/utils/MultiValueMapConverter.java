@@ -20,6 +20,9 @@ public abstract class MultiValueMapConverter {
         try {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             Map<String, String> map = objectMapper.convertValue(dto, new TypeReference<>() {});
+            map.entrySet()
+                .removeIf(entry -> entry.getValue() == null || entry.getValue().isEmpty());
+
             params.setAll(map);
 
             return params;

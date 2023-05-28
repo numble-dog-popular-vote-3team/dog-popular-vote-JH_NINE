@@ -1,0 +1,17 @@
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: 127.0.0.1:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+  data:
+    mongodb:
+      uri: mongodb://dog:1234@localhost:27017/dog?authSource=admin&retryWrites=true&w=majority
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411
+
+backend-server:
+  host: localhost
+  port: 8000

@@ -14,7 +14,11 @@ public class VotingService implements VotingUseCase {
     public VotingService(SendVotingEventPort sendVotingEventPort) {
         this.sendVotingEventPort = sendVotingEventPort;
     }
-
+//    @CircuitBreaker(name = BACKEND, fallbackMethod = "fallback")
+//    @RateLimiter(name = BACKEND)
+//    @Bulkhead(name = BACKEND)
+//    @Retry(name = BACKEND, fallbackMethod = "fallback")
+//    @TimeLimiter(name = BACKEND)
     @Transactional
     public Mono<Void> thumbsUp(Long votingId) {
         return sendVotingEventPort.sendTo("dog-voting", votingId, true);

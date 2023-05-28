@@ -1,27 +1,8 @@
 server:
   port: 8000
+
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:10000/dog?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: 1234
-
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: validate
-
-  flyway:
-    enabled: true
-    baseline-on-migrate: true
-    url: jdbc:mysql://localhost:10000/dog?serverTimezone=UTC&characterEncoding=UTF-8
-    user: root
-    password: 1234
-
-  kafka:
-    consumer:
-      bootstrap-servers: 127.0.0.1:9092
-      group-id: "consumerGroupId"
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  application:
+    name: dog-backend
+  profiles:
+    active: prod

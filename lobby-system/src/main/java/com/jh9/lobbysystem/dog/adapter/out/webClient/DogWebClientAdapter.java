@@ -3,23 +3,24 @@ package com.jh9.lobbysystem.dog.adapter.out.webClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jh9.lobbysystem.dog.application.port.in.DogSearchCondition;
 import com.jh9.lobbysystem.dog.application.port.out.webClient.DogSearchPort;
+import com.jh9.lobbysystem.utils.Adapter;
 import com.jh9.lobbysystem.utils.MultiValueMapConverter;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-@Component
+@Adapter
 class DogWebClientAdapter implements DogSearchPort {
 
     private static final String DOG_DATA_ENDPOINT = "/dogs";
-    @Value("${dog-server.host}")
+
+    @Value("${backend-server.host}")
     private String host;
 
-    @Value("${dog-server.port}")
+    @Value("${backend-server.port}")
     private int port;
 
     private WebClient webClient;

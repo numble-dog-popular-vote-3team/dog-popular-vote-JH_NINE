@@ -18,12 +18,22 @@ dependencies {
 
 	// kafka
 	implementation 'org.springframework.kafka:spring-kafka:3.0.4'
-
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 
+	// for CircuitBreaker
+	implementation 'io.github.resilience4j:resilience4j-spring-boot2:2.0.2'
+
+	// tracing
+	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin:2.2.8.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.7'
+
+	// swagger
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+	
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
