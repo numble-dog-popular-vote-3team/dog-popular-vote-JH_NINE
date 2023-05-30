@@ -1,11 +1,6 @@
-server:
-  port: 8000
-
 spring:
   application:
     name: dog-exposure
-  profiles:
-    active: prod
 
 #resilience4j:
 #  circuitbreaker:

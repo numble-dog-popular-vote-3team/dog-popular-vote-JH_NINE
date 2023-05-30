@@ -1,5 +1,5 @@
-POST {{voting-api}}/dogs/2/thumbsUp
+POST {{exposure-api}}/dogs/2/thumbsUp
 
 ###
-POST {{voting-api}}/dogs/2/thumbsDown
+POST {{exposure-api}}/dogs/3/thumbsDown
 Content-Type: application/json

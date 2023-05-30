@@ -14,6 +14,9 @@ spring:
     mongodb:
       uri: mongodb://dog:1234@localhost:27017/dog?authSource=admin&retryWrites=true&w=majority
 
-dog-server:
-  host: localhost
+server:
   port: 8000
+
+backend-server:
+  host: localhost
+  port: 8002

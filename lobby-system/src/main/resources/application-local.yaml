@@ -14,4 +14,7 @@ spring:
 
 backend-server:
   host: localhost
-  port: 8000
+  port: 8002
+
+server:
+  port: 8001

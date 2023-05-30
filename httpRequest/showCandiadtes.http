@@ -1,1 +1,1 @@
-GET {{voting-api}}/dogs
+GET {{exposure-api}}/dogs

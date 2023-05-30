@@ -12,10 +12,10 @@ import reactor.core.publisher.Mono;
 class DogWebClientAdapter implements DogPollingDataPort {
 
     private static final String DOG_DATA_ENDPOINT = "/dogs";
-    @Value("${dog-server.host}")
+    @Value("${backend-server.host}")
     private String host;
 
-    @Value("${dog-server.port}")
+    @Value("${backend-server.port}")
     private int port;
 
     private WebClient webClient;
